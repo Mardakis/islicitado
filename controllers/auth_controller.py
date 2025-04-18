@@ -1,5 +1,5 @@
 import bcrypt
-from config.db_config import conectar
+from config.db_config import get_db_connection
 import logging
 
 class AuthController:
@@ -18,11 +18,11 @@ class AuthController:
             dict: Resultado da autenticação com status e informações
         """
         try:
-            conn = conectar()
+            conn = get_db_connection()
             cursor = conn.cursor(dictionary=True)
             
             # Buscar usuário pelo nome de usuário
-            cursor.execute("SELECT * FROM usuarios WHERE usuario = %s", (usuario,))
+            cursor.execute("SELECT * FROM usuarios WHERE nome = %s", (usuario,))
             resultado = cursor.fetchone()
             conn.close()
             
@@ -107,9 +107,9 @@ class AuthController:
         """
         try:
             # Verificar se usuário já existe
-            conn = conectar()
+            conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT COUNT(*) FROM usuarios WHERE usuario = %s", (nome_usuario,))
+            cursor.execute("SELECT COUNT(*) FROM usuario WHERE nome = %s", (nome_usuario,))
             if cursor.fetchone()[0] > 0:
                 conn.close()
                 return {
@@ -122,7 +122,7 @@ class AuthController:
             
             # Inserir usuário
             cursor.execute(
-                "INSERT INTO usuarios (usuario, senha, admin) VALUES (%s, %s, %s)",
+                "INSERT INTO usuario (nome, senha, admin) VALUES (%s, %s, %s)",
                 (nome_usuario, senha_hash, admin)
             )
             conn.commit()
@@ -140,3 +140,71 @@ class AuthController:
                 'sucesso': False,
                 'mensagem': f'Erro ao criar usuário: {str(e)}'
             }
+import hashlib
+from config.db_config import get_db_connection
+
+def verificar_ou_criar_admin():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM usuario WHERE perfil = 'admin'")
+    admin = cursor.fetchone()
+
+    if not admin:
+        usuario = "admin"
+        senha = "admin123"
+        senha_hash = hashlib.sha256(senha.encode()).hexdigest()
+        perfil = "admin"
+
+        cursor.execute("""
+            INSERT INTO usuario (nome, senha, perfil)
+            VALUES (%s, %s, %s)
+        """, (usuario, senha_hash, perfil))
+        conn.commit()
+
+        print("🛡️ Usuário administrador criado:")
+        print(f"   Login: {usuario}")
+        print(f"   Senha: {senha}")
+
+    cursor.close()
+    conn.close()
+import hashlib
+from config.db_config import get_db_connection
+
+def criar_usuario(nome_usuario, senha, perfil):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    senha_hash = hashlib.sha256(senha.encode()).hexdigest()
+
+    cursor.execute("INSERT INTO usuario (nome, senha, perfil) VALUES (%s, %s, %s)",
+                   (nome_usuario, senha_hash, perfil))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def alterar_senha_usuario(usuario_id, nova_senha):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    senha_hash = hashlib.sha256(nova_senha.encode()).hexdigest()
+
+    cursor.execute("UPDATE usuario SET senha = %s WHERE id = %s", (senha_hash, usuario_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def excluir_usuario(usuario_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM usuario WHERE id = %s", (usuario_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def listar_usuarios():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT id, usuario, perfil FROM usuario ORDER BY nome")
+    usuarios = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return usuarios

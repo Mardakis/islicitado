@@ -42,6 +42,16 @@ class SistemaLicitacoes:
                 logging.StreamHandler()
             ]
         )
+        from controllers.auth_controller import verificar_ou_criar_admin
+
+        # Verifica e cria admin caso não exista
+        verificar_ou_criar_admin()
+
+# Depois continue com o que já existia no app.py
+# por exemplo:
+# from views.login_view import LoginView
+# ...
+
         
         logging.info("Sistema iniciado")
     
@@ -54,7 +64,8 @@ class SistemaLicitacoes:
         style.configure("Primary.TButton", background="#4CAF50", foreground="white")
         style.configure("Secondary.TButton", background="#f0f0f0")
         style.configure("Accent.TButton", background="#2196F3", foreground="white")
-        style.configure("Link.TButton", background=None, foreground="#0645AD", borderwidth=0)
+        style.configure("Link.TButton", foreground="#0645AD", borderwidth=0)
+
         
         # Frames
         style.configure("TFrame", background="#f8f8f8")
