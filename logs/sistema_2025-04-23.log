@@ -1,0 +1,5 @@
+2025-04-23 15:04:08,740 - root - INFO - Sistema iniciado
+2025-04-23 15:04:15,056 - controllers.auth_controller - WARNING - Tentativa de login mal-sucedida para usuário: admin
+2025-04-23 15:04:37,603 - controllers.auth_controller - INFO - Login bem-sucedido para usuário: admin
+2025-04-23 15:06:39,195 - root - INFO - Sistema iniciado
+2025-04-23 15:06:46,088 - controllers.auth_controller - INFO - Login bem-sucedido para usuário: admin

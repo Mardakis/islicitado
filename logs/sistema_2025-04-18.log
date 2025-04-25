@@ -6,3 +6,19 @@
 2025-04-18 03:39:18,285 - root - INFO - Sistema iniciado
 2025-04-18 03:39:23,840 - controllers.auth_controller - ERROR - Erro durante autenticação: 1054 (42S22): Unknown column 'usuario' in 'where clause'
 2025-04-18 03:41:28,365 - root - INFO - Sistema iniciado
+2025-04-18 03:52:06,258 - root - INFO - Sistema iniciado
+2025-04-18 03:52:11,980 - controllers.auth_controller - ERROR - Erro durante autenticação: Invalid salt
+2025-04-18 03:54:32,458 - root - INFO - Sistema iniciado
+2025-04-18 03:54:41,708 - controllers.auth_controller - INFO - Login bem-sucedido para usuário: admin
+2025-04-18 03:59:54,975 - root - INFO - Sistema iniciado
+2025-04-18 04:00:01,748 - controllers.auth_controller - INFO - Login bem-sucedido para usuário: admin
+2025-04-18 04:04:13,236 - root - INFO - Sistema iniciado
+2025-04-18 04:04:20,618 - controllers.auth_controller - INFO - Login bem-sucedido para usuário: admin
+2025-04-18 04:05:41,349 - root - INFO - Sistema iniciado
+2025-04-18 04:05:50,466 - controllers.auth_controller - INFO - Login bem-sucedido para usuário: admin
+2025-04-18 04:11:24,633 - root - INFO - Sistema iniciado
+2025-04-18 04:11:30,238 - controllers.auth_controller - INFO - Login bem-sucedido para usuário: admin
+2025-04-18 04:14:55,498 - root - INFO - Sistema iniciado
+2025-04-18 04:15:01,349 - controllers.auth_controller - INFO - Login bem-sucedido para usuário: admin
+2025-04-18 04:15:21,579 - root - INFO - Sistema iniciado
+2025-04-18 04:15:28,111 - controllers.auth_controller - INFO - Login bem-sucedido para usuário: admin

@@ -1,4 +1,4 @@
-from config.db_config import conectar
+from config.db_config import get_db_connection
 import logging
 from datetime import datetime
 
@@ -18,7 +18,7 @@ class Item:
     
     def salvar(self):
         """Salva ou atualiza o item no banco de dados"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         try:
@@ -78,7 +78,7 @@ class Item:
         if quantidade > self.quantidade_disponivel:
             return False
             
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         try:
@@ -114,7 +114,7 @@ class Item:
     @staticmethod
     def buscar_por_id(item_id):
         """Busca um item pelo ID"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         cursor.execute("SELECT * FROM itens WHERE id = %s", (item_id,))
@@ -138,7 +138,7 @@ class Item:
     @staticmethod
     def itens_por_processo(processo_id):
         """Retorna todos os itens de um processo"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         cursor.execute(
@@ -167,7 +167,7 @@ class Item:
             processo_id (int, opcional): Filtrar por ID do processo
             periodo (dict, opcional): Período de datas {inicio, fim}
         """
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         query = """

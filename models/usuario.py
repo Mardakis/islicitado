@@ -1,4 +1,4 @@
-from config.db_config import conectar
+from config.db_config import get_db_connection
 import logging
 from utils.constants import PERMISSOES
 
@@ -25,7 +25,7 @@ class Usuario:
     
     def salvar(self):
         """Salva ou atualiza o usuário no banco de dados"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         try:
@@ -83,7 +83,7 @@ class Usuario:
     @staticmethod
     def buscar_por_id(usuario_id):
         """Busca um usuário pelo ID"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         cursor.execute("SELECT * FROM usuarios WHERE id = %s", (usuario_id,))
@@ -115,7 +115,7 @@ class Usuario:
     @staticmethod
     def buscar_por_usuario(nome_usuario):
         """Busca um usuário pelo nome de usuário"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         cursor.execute("SELECT * FROM usuarios WHERE usuario = %s", (nome_usuario,))
@@ -147,7 +147,7 @@ class Usuario:
     @staticmethod
     def listar_todos(apenas_ativos=True):
         """Lista todos os usuários"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         if apenas_ativos:

@@ -1,4 +1,4 @@
-from config.db_config import conectar
+from config.db_config import get_db_connection
 import logging
 
 class Fornecedor:
@@ -20,7 +20,7 @@ class Fornecedor:
     
     def salvar(self):
         """Salva ou atualiza o fornecedor no banco de dados"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         try:
@@ -78,7 +78,7 @@ class Fornecedor:
     @staticmethod
     def buscar_por_id(fornecedor_id):
         """Busca um fornecedor pelo ID"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         cursor.execute("SELECT * FROM fornecedores WHERE id = %s", (fornecedor_id,))
@@ -105,7 +105,7 @@ class Fornecedor:
     @staticmethod
     def buscar_por_cnpj(cnpj):
         """Busca um fornecedor pelo CNPJ"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         cursor.execute("SELECT * FROM fornecedores WHERE cnpj = %s", (cnpj,))
@@ -132,7 +132,7 @@ class Fornecedor:
     @staticmethod
     def listar_todos(apenas_ativos=True):
         """Lista todos os fornecedores"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         if apenas_ativos:
@@ -160,7 +160,7 @@ class Fornecedor:
     @staticmethod
     def buscar(filtros=None):
         """Busca fornecedores com base nos filtros fornecidos"""
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         query = "SELECT * FROM fornecedores WHERE 1=1"

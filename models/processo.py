@@ -1,4 +1,4 @@
-from config.db_config import conectar
+from config.db_config import get_db_connection
 from datetime import datetime
 
 class Processo:
@@ -10,7 +10,7 @@ class Processo:
         self.itens = []
     
     def salvar(self):
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor()
         
         if self.id is None:
@@ -40,7 +40,7 @@ class Processo:
     
     @staticmethod
     def buscar_por_id(processo_id):
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute("SELECT * FROM processos WHERE id = %s", (processo_id,))
         result = cursor.fetchone()
@@ -66,7 +66,7 @@ class Processo:
     
     @staticmethod
     def buscar(filtros=None):
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         
         query = """
@@ -127,7 +127,7 @@ class Processo:
         limite = limite.replace(day=limite.day + dias)
         limite = limite.strftime('%Y-%m-%d')
         
-        conn = conectar()
+        conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute(
             "SELECT * FROM processos WHERE validade BETWEEN %s AND %s",
